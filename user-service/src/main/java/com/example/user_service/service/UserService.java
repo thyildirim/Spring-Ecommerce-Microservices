@@ -2,6 +2,7 @@ package com.example.user_service.service;
 
 import com.example.user_service.dto.LoginRequest;
 import com.example.user_service.dto.LoginResponse;
+import com.example.user_service.dto.ProfileDTO;
 import com.example.user_service.entity.User;
 import com.example.user_service.exception.HttpException;
 import com.example.user_service.repository.UserRepository;
@@ -57,5 +58,10 @@ public class UserService {
         return new LoginResponse(token);
     }
 
+    public ProfileDTO profile(String email){
+        User user = userRepository.findByEmail(email)
+                .orElseThrow(()-> new HttpException(NOT_FOUND , "User not found"));
+        return new ProfileDTO(user);
+    }
 
 }
